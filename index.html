@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progetto Ciclofficina Cassinella — Richieste</title>
+<meta name="description" content="Prenota una riparazione o segnala un guasto alla tua bici: Progetto Ciclofficina Cassinella, Residenza Cassinella.">
+<style>
+:root{--primary:#2e7d32;--primary-light:#e8f5e9;--accent:#c62828;--text:#333;--bg:#f5f5f5}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{background:var(--bg);color:var(--text);font-size:16px;padding-bottom:30px}
+header{background:var(--primary);color:#fff;padding:18px 15px;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,.2)}
+h1{font-size:1.25rem}h2{font-size:.95rem;margin-top:5px;opacity:.92;font-weight:500}
+.container{padding:12px;max-width:700px;margin:0 auto}
+.card{background:#fff;padding:15px;border-radius:8px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.status-box{padding:12px;border-radius:7px;background:#f1f8e9;border-left:4px solid var(--primary);font-size:.92rem;margin-bottom:12px;line-height:1.45}
+.form-group{margin-bottom:12px}
+label{display:block;font-weight:bold;margin-bottom:5px;font-size:.9rem}
+input[type=text],input[type=tel],input[type=email],select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;font-size:1rem;background:#fff}
+textarea{min-height:95px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid2 .form-group{margin-bottom:12px}
+.radio-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.radio-row label{margin:0;border:1px solid #ccc;border-radius:8px;padding:10px;background:#fff;display:flex;gap:8px;align-items:center;cursor:pointer;font-weight:600}
+.radio-row input{width:20px;height:20px;accent-color:var(--primary);flex-shrink:0}
+.check-item{display:flex;align-items:flex-start;gap:10px;font-size:.9rem;font-weight:normal}.check-item input{width:22px;height:22px;accent-color:var(--primary);flex-shrink:0}
+.req{color:var(--accent)}
+.btn{width:100%;padding:14px;border:none;border-radius:6px;color:#fff;background:var(--primary);font-weight:bold;font-size:1rem;cursor:pointer;margin-top:12px}
+.btn:disabled{opacity:.6}
+.btn.alt{background:#555;margin-top:8px}.btn.wa{background:#25D366}.btn.mail{background:#1565c0}
+.form-note{font-size:.8rem;color:#666;line-height:1.4;margin-top:8px}
+.ticket-ok{background:#e8f5e9;border-left:5px solid var(--primary);padding:12px;border-radius:6px;line-height:1.5}
+.ticket-warn{background:#fff3e0;border-left:5px solid #ff9800;padding:12px;border-radius:6px;line-height:1.5;margin-bottom:10px;font-size:.92rem}
+.code{font-size:1.4rem;font-weight:bold;letter-spacing:1px}
+.hidden{display:none!important}
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+footer{text-align:center;font-size:.78rem;color:#777;padding:6px 14px}
+@media(max-width:480px){.grid2,.radio-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🛠️ PROGETTO CICLOFFICINA CASSINELLA 🛠️</h1>
+  <h2>Residenza Cassinella · con la Ciclofficina Solidale di Cascina Biblioteca</h2>
+</header>
+
+<div class="container">
+  <div class="status-box">
+    <strong>🚲 La tua bici ha un problema?</strong><br>
+    Segnala il guasto o prenota una riparazione: compila il modulo e ti ricontattiamo per fissare giorno e orario.
+  </div>
+
+  <!-- Modulo (Netlify Forms: le richieste arrivano nella dashboard Netlify e per email) -->
+  <form id="reqForm" class="card" name="ticket-cassinella" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <input type="hidden" name="form-name" value="ticket-cassinella">
+    <input type="hidden" name="codice" id="fCodice">
+    <p class="hp"><label>Non compilare: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+    <div class="form-group">
+      <label>Cosa vuoi fare? <span class="req">*</span></label>
+      <div class="radio-row">
+        <label><input type="radio" name="tipo" value="Segnalazione guasto" checked> 🎫 Segnala un guasto</label>
+        <label><input type="radio" name="tipo" value="Prenotazione riparazione"> 🔧 Prenota una riparazione</label>
+      </div>
+    </div>
+
+    <div class="form-group"><label for="nome">Nome e Cognome <span class="req">*</span></label><input type="text" id="nome" name="nome" autocomplete="name" placeholder="Es. Mario Rossi"></div>
+    <div class="grid2">
+      <div class="form-group"><label for="tel">Telefono <span class="req">*</span></label><input type="tel" id="tel" name="telefono" autocomplete="tel" placeholder="Es. 3471234567"></div>
+      <div class="form-group"><label for="mail">Email <span class="req">*</span></label><input type="email" id="mail" name="email" autocomplete="email" placeholder="email@esempio.it"></div>
+    </div>
+    <div class="grid2">
+      <div class="form-group"><label for="bici">Tipo di bici <span class="req">*</span></label>
+        <select id="bici" name="tipo_bici">
+          <option value="">— scegli —</option>
+          <option>City bike / Olandese</option><option>Mountain bike</option><option>Bici da corsa / Gravel</option>
+          <option>Bici elettrica (e-bike)</option><option>Pieghevole</option><option>Altro</option>
+        </select>
+      </div>
+      <div class="form-group"><label for="cod">N° / etichetta bici Cassinella</label><input type="text" id="cod" name="codice_bici" placeholder="Es. CAS-07 (se presente)"></div>
+    </div>
+    <div class="form-group"><label for="modello">Marca / modello / colore</label><input type="text" id="modello" name="modello" placeholder="Es. Bianchi verde"></div>
+    <div class="form-group"><label for="problema">Problema riscontrato <span class="req">*</span></label><textarea id="problema" name="problema" placeholder="Descrivi cosa non va (es. ruota posteriore a terra, freno che non frena, catena che salta...)"></textarea></div>
+    <div class="form-group"><label for="quando">Giorno / orario preferito</label><input type="text" id="quando" name="preferenza" placeholder="Es. giovedì dopo le 17"></div>
+
+    <label class="check-item"><input type="checkbox" id="privacy" name="consenso_privacy" value="si"><span>Acconsento al trattamento dei miei dati per essere ricontattato dal Progetto Ciclofficina Cassinella. <span class="req">*</span></span></label>
+
+    <button type="submit" class="btn" id="sendBtn">📨 Invia richiesta</button>
+    <p class="form-note">I campi con <span class="req">*</span> sono obbligatori. I dati servono solo a gestire la tua richiesta.</p>
+  </form>
+
+  <!-- Esito -->
+  <div id="done" class="card hidden">
+    <div class="ticket-ok">✅ <strong>Richiesta inviata!</strong><br>Il tuo codice: <span class="code" id="doneCode"></span><br>Ti contatteremo al più presto. Conserva il codice se devi scriverci per questa richiesta.</div>
+    <button class="btn alt" onclick="nuova()">➕ Nuova richiesta</button>
+  </div>
+
+  <!-- Piano B se l'invio automatico non funziona -->
+  <div id="fallback" class="card hidden">
+    <div class="ticket-warn">⚠️ Non sono riuscito a inviare la richiesta automaticamente. Codice: <strong id="fbCode"></strong><br>Mandala con uno dei pulsanti qui sotto, oppure copia il testo.</div>
+    <textarea id="fbText" readonly></textarea>
+    <button class="btn wa" id="fbWa" onclick="inviaWa()">💬 Invia su WhatsApp</button>
+    <button class="btn mail" id="fbMail" onclick="inviaMail()">✉️ Invia per email</button>
+    <button class="btn alt" onclick="copia()">📋 Copia testo</button>
+    <button class="btn alt" onclick="nuova()">⬅️ Torna al modulo</button>
+  </div>
+</div>
+
+<footer>Progetto Ciclofficina Cassinella · Ciclofficina Solidale, Cascina Biblioteca</footer>
+
+<script>
+// >>> DA PERSONALIZZARE: contatti usati solo come piano B se l'invio automatico fallisce (numero WhatsApp solo cifre con prefisso, es. 393471234567)
+const OFFICINA_WA="";
+const OFFICINA_EMAIL="";
+
+const $=id=>document.getElementById(id);
+let ultimo=null;
+function nuovoCodice(){const d=new Date(),z=n=>String(n).padStart(2,"0");return"CAS"+String(d.getFullYear()).slice(2)+z(d.getMonth()+1)+z(d.getDate())+"-"+Math.random().toString(36).slice(2,5).toUpperCase()}
+function testo(code){
+  const v=id=>$(id).value.trim(),tipo=document.querySelector('input[name="tipo"]:checked').value;
+  const L=["🚲 PROGETTO CICLOFFICINA CASSINELLA — NUOVA RICHIESTA","Codice: "+code,"Tipo: "+tipo,"","Nome: "+v("nome"),"Telefono: "+v("tel"),"Email: "+v("mail"),"Bici: "+v("bici")+(v("modello")?" — "+v("modello"):"")];
+  if(v("cod"))L.push("N° bici Cassinella: "+v("cod"));
+  L.push("Problema: "+v("problema"));
+  if(v("quando"))L.push("Preferenza giorno/orario: "+v("quando"));
+  return L.join("\n");
+}
+function valida(){
+  const v=id=>$(id).value.trim();
+  if(!v("nome")||!v("tel")||!v("mail")||!v("bici")||!v("problema")){alert("Compila tutti i campi obbligatori (*).");return false}
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("mail"))){alert("Controlla l'indirizzo email.");return false}
+  if(v("tel").replace(/\D/g,"").length<6){alert("Controlla il numero di telefono.");return false}
+  if(!$("privacy").checked){alert("Per inviare la richiesta serve il consenso al trattamento dei dati.");return false}
+  return true;
+}
+$("reqForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  if(!valida())return;
+  const code=nuovoCodice();$("fCodice").value=code;
+  ultimo={code,text:testo(code)};
+  const btn=$("sendBtn");btn.disabled=true;btn.textContent="Invio in corso…";
+  try{
+    const body=new URLSearchParams(new FormData($("reqForm"))).toString();
+    const r=await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body});
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    $("reqForm").classList.add("hidden");$("doneCode").textContent=code;$("done").classList.remove("hidden");
+  }catch(err){
+    $("reqForm").classList.add("hidden");$("fbCode").textContent=code;$("fbText").value=ultimo.text;
+    $("fbWa").classList.toggle("hidden",!OFFICINA_WA);$("fbMail").classList.toggle("hidden",!OFFICINA_EMAIL);
+    $("fallback").classList.remove("hidden");
+  }
+  btn.disabled=false;btn.textContent="📨 Invia richiesta";window.scrollTo({top:0,behavior:"smooth"});
+});
+function inviaWa(){window.open("https://wa.me/"+OFFICINA_WA+"?text="+encodeURIComponent(ultimo.text),"_blank")}
+function inviaMail(){window.location.href="mailto:"+OFFICINA_EMAIL+"?subject="+encodeURIComponent("Richiesta "+ultimo.code)+"&body="+encodeURIComponent(ultimo.text)}
+function copia(){const t=$("fbText");t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand("copy")}}
+function nuova(){
+  $("reqForm").reset();$("done").classList.add("hidden");$("fallback").classList.add("hidden");$("reqForm").classList.remove("hidden");window.scrollTo({top:0})
+}
+</script>
+</body>
+</html>
